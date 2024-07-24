@@ -1,6 +1,7 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { h } from 'vue';
 import { Tag } from 'ant-design-vue';
+import { RenderCallbackParams } from '@/components/Form';
 
 export const columns: BasicColumn[] = [
   {
@@ -75,6 +76,9 @@ export const formSchema: FormSchema[] = [
         value: 'id',
       },
       getPopupContainer: () => document.body,
+    },
+    ifShow: ({ values }: RenderCallbackParams) => {
+      return values.parentId !== 0;
     },
     required: true,
   },

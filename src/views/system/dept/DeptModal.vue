@@ -16,7 +16,7 @@
   const emit = defineEmits(['success', 'register']);
 
   const isUpdate = ref(true);
-
+  const rowId = ref();
   const [registerForm, { resetFields, setFieldsValue, updateSchema, validate }] = useForm({
     labelWidth: 100,
     baseColProps: { span: 24 },
@@ -33,6 +33,7 @@
       setFieldsValue({
         ...data.record,
       });
+      rowId.value = data.record.id;
     }
     const treeData = await getDetpList();
     updateSchema({
@@ -47,7 +48,7 @@
     try {
       const values = await validate();
       if (isUpdate.value) {
-        await updateDept(values);
+        await updateDept({ ...values, id: rowId.value });
       } else {
         await createDept(values);
       }
